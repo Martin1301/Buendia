@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Dayanaa ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+        }
+
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #e4efe9;
+        }
+
+        /* Fondo con la imagen del campo de girasoles */
+        .background-sunflowers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('girasoles.jpg') no-repeat center center/cover;
+            z-index: -1;
+        }
+
+        /* Resplandor del sol superior central */
+        .sun-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255,253,219,0.8) 0%, rgba(255,237,117,0.3) 50%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Tarjeta translúcida con efecto difuminado (Glassmorphism) */
+        .card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 35px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        /* Estilos de la vista de bloqueo */
+        .lock-view h2 {
+            font-size: 1.4rem;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        input[type="password"]:focus {
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 4px 15px rgba(255,187,0,0.3);
+        }
+
+        .btn-submit {
+            margin-top: 18px;
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #e6b800;
+            transform: translateY(-1px);
+        }
+
+        .error-msg {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+            font-weight: bold;
+        }
+
+        /* Estilos de la vista del mensaje */
+        .hidden-content {
+            display: none;
+        }
+
+        .title-message {
+            font-size: 1.8rem;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #111;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* Icono del Sol animado */
+        .sun-icon-container {
+            margin: 20px auto 0 auto;
+            width: 90px;
+            height: 90px;
+            position: relative;
+        }
+
+        .sun-svg {
+            width: 100%;
+            height: 100%;
+            animation: spinSun 20s linear infinite;
+        }
+
+        @keyframes spinSun {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Contenedor invisible para el reproductor de YouTube */
+        #youtube-audio-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+    <!-- Script oficial de la API de YouTube -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+    <!-- Fondo de Girasoles e Iluminación -->
+    <div class="background-sunflowers"></div>
+    <div class="sun-glow"></div>
+
+    <!-- VISTA 1: Formulario de Contraseña -->
+    <div class="card" id="loginCard">
+        <h2>Ingresa la contraseña para acceder a tu mensaje de buenos días ❤️</h2>
+        <input type="password" id="passwordInput" placeholder="Introduce la contraseña aquí...">
+        <p class="error-msg" id="errorMessage">Contraseña incorrecta, vuelve a intentarlo 🥺</p>
+        <button class="btn-submit" onclick="checkPassword()">Ingresar</button>
+    </div>
+
+    <!-- VISTA 2: El Mensaje Secreto -->
+    <div class="card hidden-content" id="messageCard">
+        <h1 class="title-message">¡Buenos días, Dayanaa!</h1>
+        <p class="message-text">
+            Espero que hayas podido dormir muy bien. ¡Cómo quisiera poder darte un besito en la frente de buenos días! 🥹 Hoy será un bonito día, te quiero mucho, bastante. &lt;3
+        </p>
+        
+        <!-- Icono decorativo del sol animado -->
+        <div class="sun-icon-container">
+            <svg class="sun-svg" viewBox="0 0 24 24">
+                <path fill="#ffb300" d="M12,6.5A5.5,5.5 0 0,1 17.5,12A5.5,5.5 0 0,1 12,17.5A5.5,5.5 0 0,1 6.5,12A5.5,5.5 0 0,1 12,6.5M12,2A1,1 0 0,1 13,3V4.06C16.94,4.5 20,7.56 20.44,11.5H21.5A1,1 0 0,1 22.5,12.5A1,1 0 0,1 21.5,13.5H20.44C20,17.44 16.94,20.5 13,20.94V22A1,1 0 0,1 12,23A1,1 0 0,1 11,22V20.94C7.06,20.5 4,17.44 3.56,13.5H2.5A1,1 0 0,1 1.5,12.5A1,1 0 0,1 2.5,11.5H3.56C4,7.56 7.06,4.5 11,4.06V3A1,1 0 0,1 12,2Z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Contenedor donde se cargará el reproductor invisible -->
+    <div id="youtube-audio-player"></div>
+
+    <script>
+        // Recuerda cambiar este ID por el de tu canción favorita de YouTube
+        const YOUTUBE_VIDEO_ID = 'dQw4w9WgXcQ'; 
+
+        let player;
+        let isPlayerReady = false;
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            const error = document.getElementById("errorMessage");
+
+            if (password === "<3") {
+                error.style.display = "none";
+                document.getElementById("loginCard").style.display = "none";
+                document.getElementById("messageCard").style.display = "block";
+                
+                // Inicializa el audio oculto tras la contraseña
+                initYouTubePlayer(YOUTUBE_VIDEO_ID);
+            } else {
+                error.style.display = "block";
+            }
+        }
+
+        function initYouTubePlayer(videoId) {
+            player = new YT.Player('youtube-audio-player', {
+                height: '1',
+                width: '1',
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'loop': 1,
+                    'playlist': videoId,
+                    'controls': 0
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            event.target.playVideo();
+        }
+    </script>
+</body>
+</html>
